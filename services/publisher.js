@@ -6,7 +6,7 @@ class Publisher{
 
     publish(event, topic, message){    
         // publish/emit message
-        this.emitter.emit(event, topic, JSON.stringify(message));
+        this.emitter.emit(event, topic, message);
     }
 }
 

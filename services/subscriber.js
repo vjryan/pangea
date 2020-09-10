@@ -14,7 +14,7 @@ class Subscriber{
                 axios.post(
                         url,
                         {
-                            topic: topic, 
+                            event: topic, 
                             message: message
                         },
                         config.axios.config
