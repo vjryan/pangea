@@ -5,4 +5,7 @@ var port = 8000;
 app.set('port', port);
 
 var server = http.createServer(app);
-server.listen(port);
+server.listen(port, function(){
+
+    console.log('Server started!');
+});
