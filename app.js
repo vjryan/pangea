@@ -9,7 +9,7 @@ const EventEmitter  = require('events');
 const Subscriber   = require('./services/subscriber');
 const Publisher    = require('./services/publisher');
 
-// initialize 
+// initialize
 const app         = express();
 const config      = require('./config');
 const emitter     = new EventEmitter();
@@ -23,7 +23,8 @@ app.get('/', function(req, res, next){
     res.sendStatus(200);
 });
 
-
+// logs to console (or app.log) the message
+// emitted by the subscriber
 app.post('/event', function(req, res, next){
     let message = req.body;
     console.log('event received message');
@@ -32,24 +33,31 @@ app.post('/event', function(req, res, next){
     res.sendStatus(200);
 });
 
+// Subscribers to provided topic
 app.post('/subscribe/:topic', function(req, res, next){
-    
-    let topic       = req.params.topic || null;  
+
+    let topic       = req.params.topic || null;
     let forwardUrl  = req.body.url;
 
+    // if we don't receive a json request.
     if (!req.is('application/json')) {
-
-        // Send error here
-        res.sendStatus(400);
-        next();
+        // // Send error here
+        return res.sendStatus(400);
     }
-    
+
     new Subscriber(emitter).subscribe(topic, forwardUrl);
     res.sendStatus(200);
 });
 
+// publishes to provided topic
 app.post('/publish/:topic', function(req, res, next){
-    
+
+    // if we don't receive a json request.
+    if (!req.is('application/json')) {
+        // // Send error here
+        return res.sendStatus(400);
+    }
+
     let topic   = req.params.topic  || null;
     let message = req.body          || {};
 

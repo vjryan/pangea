@@ -9,3 +9,6 @@ server.listen(port, function(){
 
     console.log('Server started!');
 });
+
+
+module.exports = server;
